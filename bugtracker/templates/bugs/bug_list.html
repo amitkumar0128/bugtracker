@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Bug List</h2>
+
+    <a href="{% url 'bug_create' %}" class="btn btn-success mb-3">+ Report New Bug</a>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Project</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bug in bugs %}
+            <tr>
+                <td>{{ bug.title }}</td>
+                <td>{{ bug.project }}</td>
+                <td>{{ bug.severity }}</td>
+                <td>{{ bug.status }}</td>
+                <td>{{ bug.assigned_to }}</td>
+                <td>
+                    <a href="{% url 'bug_update' bug.id %}" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No bugs reported.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
