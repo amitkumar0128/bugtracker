@@ -5,10 +5,40 @@ from .models import BugReport
 from .forms import BugReportForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.db.models import Count
 
 
 def home(request):
     return render(request, 'home.html')
+
+def dashboard(request):
+    # Count bugs by status
+    bugs = BugReport.objects.all()
+    opened_bugs = bugs.filter(status='Open').count()
+    resolved_bugs = bugs.filter(status='Resolved').count()
+    total_bugs = [opened_bugs, resolved_bugs]
+
+    # Count bugs by severity
+    low_severity = bugs.filter(severity='Low').count()
+    medium_severity = bugs.filter(severity='Medium').count()
+    high_severity = bugs.filter(severity='High').count()
+    critical_severity = bugs.filter(severity='Critical').count()
+    severity_counts = [low_severity, medium_severity, high_severity, critical_severity]
+
+    # Count bugs by assignee
+    name = request.user
+    user_assigned_bugs = bugs.filter(assigned_to=name).count()
+    all_bugs = bugs.count()
+    remaining_bugs = all_bugs - user_assigned_bugs
+    assigned_counts = [user_assigned_bugs, remaining_bugs]
+    print(name)
+    context = {
+        'total_bugs': total_bugs,
+        'severity_counts': severity_counts,
+        'assigned_counts': assigned_counts,
+    }
+    return render(request, 'dashboard.html', context)
 
 def bug_list(request):
     status_filter = request.GET.get('status')

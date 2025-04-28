@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Bug Tracker Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-4" id="bug_status_data" data-bugs="{{ total_bugs|safe }}">
+            <canvas id="status_data"></canvas>
+        </div>
+        <div class="col-md-4" id="severity_counts_data" data-severity="{{ severity_counts|safe }}">
+            <canvas id="severity_counts"></canvas>
+        </div>
+        <div class="col-md-4" id="assigned_counts_data" data-assigned="{{ assigned_counts|safe }}">
+            <canvas id="assigned_counts"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    var bugDataElement = document.getElementById('bug_status_data');
+    var bugCounts = JSON.parse(bugDataElement.dataset.bugs);
+    var openCount = bugCounts[0];
+    var resolvedCount = bugCounts[1];
+
+    var status_ctx = document.getElementById('status_data').getContext('2d');
+    var myPieChart = new Chart(status_ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Open', 'Resolved'],
+            datasets: [{
+                label: 'Bugs by Status',
+                data: [openCount, resolvedCount],
+                backgroundColor: [
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(0, 255, 0, 1)'
+                ],
+            }]
+        },
+        options: {
+            maintainAspectRatio: false // Allow the chart to scale freely
+        }      
+    });
+
+    var severityDataElement = document.getElementById('severity_counts_data');
+    var severityCounts = JSON.parse(severityDataElement.dataset.severity);
+    var lowSeverityCount = severityCounts[0];
+    var mediumSeverityCount = severityCounts[1];
+    var highSeverityCount = severityCounts[2];
+    var criticalSeverityCount = severityCounts[3];
+
+    var severity_ctx = document.getElementById('severity_counts').getContext('2d');
+    var myPieChart = new Chart(severity_ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Low', 'Medium', 'High', 'Critical'],
+            datasets: [{
+                label: 'Bugs by Severity',
+                data: [lowSeverityCount, mediumSeverityCount, highSeverityCount, criticalSeverityCount],
+                backgroundColor: [
+                    'rgba(0, 255, 0, 1)',
+                    'rgba(255, 255, 0, 1)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(255, 0, 255, 1)'
+                ],
+            }]
+        },
+        options: {
+            maintainAspectRatio: false // Allow the chart to scale freely
+        }      
+    });
+
+    var assignedDataElement = document.getElementById('assigned_counts_data');
+    var assignedCounts = JSON.parse(assignedDataElement.dataset.assigned);
+    var userCount = assignedCounts[0];
+    var otherUserCount = assignedCounts[1];
+
+    var assign_ctx = document.getElementById('assigned_counts').getContext('2d');
+    var myPieChart = new Chart(assign_ctx, {
+        type: 'pie',
+        data: {
+            labels: ['User', 'Other Users'],
+            datasets: [{
+                label: 'Bugs by Assignee',
+                data: [userCount, otherUserCount],
+                backgroundColor: [
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(0, 255, 0, 1)'
+                ],
+            }]
+        },
+        options: {
+            maintainAspectRatio: false // Allow the chart to scale freely
+        }      
+    });
+</Script>
+
+{% endblock %}
