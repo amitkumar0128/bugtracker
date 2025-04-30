@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bugs',
+    'rest_framework',  # For API support
     'django.contrib.humanize',  # For better date formatting
 ]
 

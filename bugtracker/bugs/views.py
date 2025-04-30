@@ -1,17 +1,24 @@
-# Create your views here.
-
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import BugReport
 from .forms import BugReportForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import Count
+from rest_framework import generics
+from .serializers import BugReportSerializer
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CustomUserCreationForm
+from django.contrib.auth import login
+from .models import UserProfile
 
 
 def home(request):
     return render(request, 'home.html')
 
+
+@login_required
 def dashboard(request):
     # Count bugs by status
     bugs = BugReport.objects.all()
@@ -32,7 +39,7 @@ def dashboard(request):
     all_bugs = bugs.count()
     remaining_bugs = all_bugs - user_assigned_bugs
     assigned_counts = [user_assigned_bugs, remaining_bugs]
-    print(name)
+
     context = {
         'total_bugs': total_bugs,
         'severity_counts': severity_counts,
@@ -40,11 +47,16 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
+
+@login_required
 def bug_list(request):
     status_filter = request.GET.get('status')
     severity_filter = request.GET.get('severity')
 
-    bugs = BugReport.objects.all()
+    if request.user.userprofile.role == 'Reporter':
+        bugs = BugReport.objects.filter(reporter=request.user)
+    else:
+        bugs = BugReport.objects.all()
 
     if status_filter:
         bugs = bugs.filter(status=status_filter)
@@ -63,7 +75,9 @@ def bug_create(request):
     if request.method == 'POST':
         form = BugReportForm(request.POST)
         if form.is_valid():
-            form.save()
+            bug = form.save(commit=False)
+            bug.reporter = request.user
+            bug.save()
             return redirect('bug_list')
     else:
         form = BugReportForm()
@@ -78,12 +92,31 @@ def bug_update(request, pk):
         return redirect('bug_list')
     return render(request, 'bugs/bug_form.html', {'form': form})
 
-def register_view(request):
+
+class BugDeleteView(LoginRequiredMixin, DeleteView):
+    model = BugReport
+    template_name = 'bugs/bug_confirm_delete.html'
+    success_url = reverse_lazy('bug_list')  # Adjust if your list view is named differently
+
+
+def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            role = form.cleaned_data['role']
+            UserProfile.objects.get_or_create(user=user, defaults={'role': role})
+            login(request, user)
+            return redirect('home')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+class BugListAPI(generics.ListAPIView):
+    queryset = BugReport.objects.all()
+    serializer_class = BugReportSerializer
+
+class BugDetailAPI(generics.RetrieveAPIView):
+    queryset = BugReport.objects.all()
+    serializer_class = BugReportSerializer

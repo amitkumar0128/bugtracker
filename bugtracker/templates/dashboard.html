@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Bug Tracker Dashboard</h2>
+    <h3>{{user.username}}</h3>
 
     <div class="row">
         <div class="col-md-4" id="bug_status_data" data-bugs="{{ total_bugs|safe }}">
