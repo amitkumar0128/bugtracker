@@ -15,8 +15,10 @@ from .models import UserProfile
 
 
 def home(request):
-    return render(request, 'home.html')
-
+    profile = None
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'home.html', {'profile': profile})
 
 @login_required
 def dashboard(request):
