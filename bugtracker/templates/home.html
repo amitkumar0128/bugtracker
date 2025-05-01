@@ -1,13 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-5 text-center">
-    <h1>Welcome to Bug Tracker Lite 🐞</h1>
-    <p class="lead">Track, manage, and squash bugs with ease.</p>
-    {% if user.is_authenticated %}
-    <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Go to Dashboard</a>
-    {% else %}
-    <a href="{% url 'login' %}" class="btn btn-success mt-3 me-2">Login</a>
-    <a href="{% url 'register' %}" class="btn btn-outline-secondary mt-3">Register</a>
-    {% endif %}
+
+<div class="container text-center">
+    <!-- Welcome Card -->
+    <div class="welcome-card mx-auto p-5">
+        <h1 class="display-5 mb-3">Welcome to Bug Tracker Lite 🐞</h1>
+        <p class="lead mb-4">Track, manage, and squash bugs with ease.</p>
+        <!-- Banner Image -->
+        <div class="banner-wrapper mb-5">
+            <img src="{% static 'images/bug-banner.png' %}" alt="Bug Tracker Banner"
+                class="img-fluid banner-img rounded shadow-sm">
+        </div>
+    </div>
 </div>
+
+<style>
+    .banner-wrapper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .banner-img {
+        width: 100%;
+        aspect-ratio: 4 / 1.5;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-card {
+        background-color: #f8f9fa;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+    .welcome-card h1 {
+        color: #343a40;
+    }
+    .welcome-card p {
+        color: #6c757d;
+    }
+    
+    
+</style>
+
 {% endblock %}
