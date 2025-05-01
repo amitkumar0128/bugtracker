@@ -22,6 +22,7 @@ The system includes core bug tracking features: user authentication, bug creatio
 - Clean admin panel for project management
 - DRY code structure using Django's class-based views
 - Easy to extend into a team collaboration or project management tool
+- Integration of REST API (Read Only)
 
 ---
 
