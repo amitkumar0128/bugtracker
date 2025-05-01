@@ -61,7 +61,7 @@ To run this project on your local machine, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/amitkumar0128/bugtracker.git](https://github.com/amitkumar0128/bugtracker.git)
+    git clone https://github.com/amitkumar0128/bugtracker.git
     cd bugtracker
     ```
 
@@ -111,37 +111,6 @@ To prepare for production deployment:
 * Run `python manage.py collectstatic` to gather all static files into a single directory.
 * Consider using production-ready WSGI servers like Gunicorn or uWSGI along with a reverse proxy like NGINX.
 * You can also deploy this project on platforms like Heroku, Railway, or Render, which provide specific deployment workflows for Python/Django applications.
-
-## Project Structure
-
-bugtrack/
-├── bugtracker/         # Main Django project directory
-│   ├── bugs/           # Django application containing models, views, forms, etc.
-│   │   ├── models.py   # Defines the data models for bugs and related entities
-│   │   ├── views.py    # Handles the application's logic and renders templates
-│   │   ├── forms.py    # Defines forms for user input
-│   │   ├── urls.py     # Defines the URL patterns for the 'bugs' application
-│   │   └── ...
-│   ├── bugtracker/     # Django project settings and configurations
-│   │   ├── settings.py # Contains important project settings (database, DEBUG mode, etc.)
-│   │   ├── urls.py     # Defines the project-level URL patterns
-│   │   └── ...
-│   ├── db.sqlite3       # Local development database (not for production)
-│   ├── manage.py        # Django's command-line utility
-│   ├── static/          # Directory for static files (CSS, JavaScript, images)
-│   │   └── ...
-│   └── templates/       # Directory for HTML templates
-│       ├── base.html     # Base template for other HTML files
-│       ├── bugs/         # Templates specific to the 'bugs' application
-│       │   ├── bug_list.html
-│       │   ├── bug_form.html
-│       │   └── ...
-│       ├── dashboard.html  # Template for the user dashboard
-│       └── registration/ # Templates for user registration and login
-│           ├── login.html
-│           └── register.html
-├── requirements.txt  # Lists the Python dependencies for the project
-└── README.md         # The main README file with project instructions
 
 ## License
 
