@@ -10,6 +10,7 @@
         <select name="status" class="form-select" style="width: 150px;">
           <option value="">All Statuses</option>
           <option value="Open" {% if selected_status == 'Open' %}selected{% endif %}>Open</option>
+          <option value="In Progress" {% if selected_status == 'In Progress' %}selected{% endif %}>In Progress</option>
           <option value="Resolved" {% if selected_status == 'Resolved' %}selected{% endif %}>Resolved</option>
         </select>
         <select name="severity" class="form-select" style="width: 150px;">

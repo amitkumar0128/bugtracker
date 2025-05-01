@@ -25,8 +25,9 @@ def dashboard(request):
     # Count bugs by status
     bugs = BugReport.objects.all()
     opened_bugs = bugs.filter(status='Open').count()
+    in_progress_bugs = bugs.filter(status='In Progress').count()
     resolved_bugs = bugs.filter(status='Resolved').count()
-    total_bugs = [opened_bugs, resolved_bugs]
+    total_bugs = [opened_bugs, in_progress_bugs ,resolved_bugs]
 
     # Count bugs by severity
     low_severity = bugs.filter(severity='Low').count()

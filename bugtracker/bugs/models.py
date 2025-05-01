@@ -11,6 +11,7 @@ def get_default_reporter():
 class BugReport(models.Model):
     STATUS_CHOICES = [
         ('Open', 'Open'),
+        ('In Progress', 'In Progress'),
         ('Resolved', 'Resolved'),
     ]
 
@@ -23,7 +24,7 @@ class BugReport(models.Model):
 
     title = models.CharField(max_length=200)
     description = models.TextField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Open')
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='Open')
     severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES)
     project = models.CharField(max_length=100)
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

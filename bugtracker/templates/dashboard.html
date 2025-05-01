@@ -146,18 +146,18 @@
         };
 
         const bugData = JSON.parse(document.getElementById('bug_status_data').dataset.bugs);
-        createChart('pie', document.getElementById('status_data').getContext('2d'), ['Open', 'Resolved'], bugData, [
-            'rgba(255, 100, 100, 0.9)', 'rgba(75, 200, 80, 0.9)'
+        createChart('pie', document.getElementById('status_data').getContext('2d'), ['Open', 'In Progress', 'Resolved'], bugData, [
+            '#0d6efd', '#fd7e14', '#198754'
         ]);
 
         const severityData = JSON.parse(document.getElementById('severity_counts_data').dataset.severity);
         createChart('doughnut', document.getElementById('severity_counts').getContext('2d'), ['Low', 'Medium', 'High', 'Critical'], severityData, [
-            'rgba(100, 220, 120, 0.9)', 'rgba(255, 215, 0, 0.9)', 'rgba(255, 130, 0, 0.9)', 'rgba(255, 50, 50, 0.9)'
+            '#6c757d', '#ffc107', '#dc3545', '#842029'
         ]);
 
         const assignedData = JSON.parse(document.getElementById('assigned_counts_data').dataset.assigned);
         createChart('polarArea', document.getElementById('assigned_counts').getContext('2d'), ['You', 'Others'], assignedData, [
-            'rgba(50, 150, 250, 0.9)', 'rgba(200, 100, 220, 0.9)'
+            '#20c997', '#adb5bd'
         ]);
     });
 </script>
