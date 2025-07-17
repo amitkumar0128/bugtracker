@@ -1,0 +1,24 @@
+# Build Stage
+FROM python:3.11 AS builder
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --prefix=/install -r requirements.txt
+
+# Final Image
+FROM python:3.11-slim
+
+# Set working dir and create user
+WORKDIR /app
+
+# Copy installed packages
+COPY --from=builder /install /usr/local
+
+# Copy app code
+COPY . .
+
+# Run the Django app
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8000 bugtracker.wsgi"]
