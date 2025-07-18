@@ -20,5 +20,8 @@ COPY --from=builder /install /usr/local
 # Copy app code
 COPY . .
 
+# Collect the static files
+RUN python manage.py collectstatic --noinput
+
 # Run the Django app
 CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8000 bugtracker.wsgi"]
