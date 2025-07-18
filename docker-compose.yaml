@@ -1,0 +1,22 @@
+services:
+
+  bugtracker:
+    container_name: bugtracker
+    image: "akj49/bugtracker"
+    networks:
+      - bugtracker-network
+    
+  reverse_proxy:
+    image: "nginx:1.25-alpine"
+    ports:
+      - 80:80
+    volumes: 
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - bugtracker
+    networks:
+      - bugtracker-network
+    restart: always
+
+networks:
+  bugtracker-network:
