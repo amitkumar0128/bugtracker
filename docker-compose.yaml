@@ -1,12 +1,10 @@
 services:
 
   bugtracker:
-    build:
-      context: .
+    image: "akj49/bugtracker"
     container_name: bugtracker
-    #image: "akj49/bugtracker"
     volumes:
-      - ./db.sqlite3:/app/db.sqlite3
+      - staticfiles_volume:/app/staticfiles
     networks:
       - bugtracker-network
     
@@ -16,7 +14,7 @@ services:
       - 80:80
     volumes: 
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./staticfiles:/app/staticfiles
+      - staticfiles_volume:/app/staticfiles
     depends_on: 
       - bugtracker
     networks:
@@ -25,3 +23,6 @@ services:
 
 networks:
   bugtracker-network:
+
+volumes:
+  staticfiles_volume:
