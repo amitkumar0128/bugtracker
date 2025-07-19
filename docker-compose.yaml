@@ -1,7 +1,9 @@
 services:
 
   bugtracker:
-    image: "akj49/bugtracker"
+    build:
+      context: .
+      dockerfile: Dockerfile-multi
     container_name: bugtracker
     volumes:
       - staticfiles_volume:/app/staticfiles
