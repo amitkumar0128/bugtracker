@@ -97,11 +97,11 @@ To run this project on your local machine, follow these steps:
 
 6.  **Start the development server:**
     ```bash
-    python manage.py runserver
+    python manage.py runserver 0.0.0.0:8000
     ```
 
 7.  **Open your browser:**
-    Navigate to `http://127.0.0.1:8000/`.
+    Navigate to `http://your_public_ip:8000/`.
 
 ## Deployment Notes
 
