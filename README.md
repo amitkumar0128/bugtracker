@@ -35,6 +35,7 @@ This project is built entirely with Django and includes:
 - **Database**: SQLite (easily swappable for PostgreSQL/MySQL)
 - **Optional Enhancements**: Django REST Framework (for API extension), Static files served via Django or CDN
 - **Design**: AI-generated illustrations, custom CSS styling
+- **Containerization**: Docker and Docker Compose
 
 ---
 
@@ -66,58 +67,18 @@ To run this project on your local machine, follow these steps:
     cd bugtracker
     ```
 
-2. **Install Python3 and dependencies**
+2. **Install Docker and docker compose**
    ```bash
-   sudo apt install python3 python-is-python3 python3-venv -y
+   sudo apt install docker.io docker-compose-v2 -y
    ```
 
-3.  **Create and activate a virtual environment:**
-
-    * **Linux/macOS:**
-        ```bash
-        python -m venv .venv
-        source .venv/bin/activate
-        ```
-    * **Windows:**
-        ```bash
-        python -m venv .venv
-        .venv\Scripts\activate
-        ```
-
-4.  **Install dependencies:**
+3.  **Start the development server:**
     ```bash
-    pip install -r requirements.txt
+    sudo docker compose up -d
     ```
 
-5.  **Run migrations and collect static files:**
-    ```bash
-    python manage.py migrate
-    python manage.py collectstatic
-    ```
-
-6.  **Create a superuser:**
-    ```bash
-    python manage.py createsuperuser
-    ```
-    Follow the prompts to create an administrative user.
-
-7.  **Start the development server:**
-    ```bash
-    python manage.py runserver 0.0.0.0:8000
-    ```
-
-8.  **Open your browser:**
-    Navigate to `http://your_public_ip:8000/`.
-
-## Deployment Notes
-
-To prepare for production deployment:
-
-* Set `DEBUG = False` in your project's `settings.py` file.
-* Add your domain name or server IP address to the `ALLOWED_HOSTS` setting in `settings.py`.
-* Run `python manage.py collectstatic` to gather all static files into a single directory.
-* Consider using production-ready WSGI servers like Gunicorn or uWSGI along with a reverse proxy like NGINX.
-* You can also deploy this project on platforms like Heroku, Railway, or Render, which provide specific deployment workflows for Python/Django applications.
+4.  **Open your browser:**
+    Navigate to `http://your_public_ip/`.
 
 ## License
 
