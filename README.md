@@ -66,41 +66,47 @@ To run this project on your local machine, follow these steps:
     cd bugtracker
     ```
 
-2.  **Create and activate a virtual environment:**
+2. **Install Python3 and dependencies**
+   ```bash
+   sudo apt install python3 python-is-python3 python3-venv -y
+   ```
+
+3.  **Create and activate a virtual environment:**
 
     * **Linux/macOS:**
         ```bash
-        python -m venv venv
-        source venv/bin/activate
+        python -m venv .venv
+        source .venv/bin/activate
         ```
     * **Windows:**
         ```bash
-        python -m venv venv
-        venv\Scripts\activate
+        python -m venv .venv
+        .venv\Scripts\activate
         ```
 
-3.  **Install dependencies:**
+4.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Run migrations:**
+5.  **Run migrations and collect static files:**
     ```bash
     python manage.py migrate
+    python manage.py collectstatic
     ```
 
-5.  **Create a superuser:**
+6.  **Create a superuser:**
     ```bash
     python manage.py createsuperuser
     ```
     Follow the prompts to create an administrative user.
 
-6.  **Start the development server:**
+7.  **Start the development server:**
     ```bash
     python manage.py runserver 0.0.0.0:8000
     ```
 
-7.  **Open your browser:**
+8.  **Open your browser:**
     Navigate to `http://your_public_ip:8000/`.
 
 ## Deployment Notes
